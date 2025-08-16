@@ -45,6 +45,8 @@
             this.lbTimer = new System.Windows.Forms.Label();
             this.lbWpm = new System.Windows.Forms.Label();
             this.label1 = new System.Windows.Forms.Label();
+            this.cbTimeCounter = new System.Windows.Forms.ComboBox();
+            this.lbTimeCounter = new System.Windows.Forms.Label();
             this.SuspendLayout();
             // 
             // contextMenuStrip1
@@ -58,16 +60,15 @@
             this.cbLanguages.Items.AddRange(new object[] {
             "English",
             "Macedonian"});
-            this.cbLanguages.Location = new System.Drawing.Point(302, 121);
+            this.cbLanguages.Location = new System.Drawing.Point(299, 112);
             this.cbLanguages.Name = "cbLanguages";
             this.cbLanguages.Size = new System.Drawing.Size(121, 21);
             this.cbLanguages.TabIndex = 2;
             this.cbLanguages.Text = "English";
-            this.cbLanguages.SelectedIndexChanged += new System.EventHandler(this.cbLanguages_SelectedIndexChanged);
             // 
             // btnRestart
             // 
-            this.btnRestart.Location = new System.Drawing.Point(437, 325);
+            this.btnRestart.Location = new System.Drawing.Point(421, 397);
             this.btnRestart.Name = "btnRestart";
             this.btnRestart.Size = new System.Drawing.Size(75, 23);
             this.btnRestart.TabIndex = 3;
@@ -84,7 +85,7 @@
             this.cbTime.TabIndex = 4;
             this.cbTime.Text = "Time";
             this.cbTime.UseVisualStyleBackColor = true;
-            this.cbTime.CheckedChanged += new System.EventHandler(this.checkBox1_CheckedChanged);
+            this.cbTime.CheckedChanged += new System.EventHandler(this.cbTime_CheckedChanged);
             // 
             // cbNumbers
             // 
@@ -95,7 +96,6 @@
             this.cbNumbers.TabIndex = 5;
             this.cbNumbers.Text = "Numbers";
             this.cbNumbers.UseVisualStyleBackColor = true;
-            this.cbNumbers.CheckedChanged += new System.EventHandler(this.checkBox2_CheckedChanged);
             // 
             // cBpunctuation
             // 
@@ -106,7 +106,6 @@
             this.cBpunctuation.TabIndex = 6;
             this.cBpunctuation.Text = "Punctinations";
             this.cBpunctuation.UseVisualStyleBackColor = true;
-            this.cBpunctuation.CheckedChanged += new System.EventHandler(this.cBpunctuation_CheckedChanged);
             // 
             // cbWords
             // 
@@ -143,7 +142,7 @@
             // 
             // btnScores
             // 
-            this.btnScores.Location = new System.Drawing.Point(668, 99);
+            this.btnScores.Location = new System.Drawing.Point(639, 131);
             this.btnScores.Name = "btnScores";
             this.btnScores.Size = new System.Drawing.Size(75, 23);
             this.btnScores.TabIndex = 10;
@@ -153,16 +152,16 @@
             // 
             // rtbText
             // 
-            this.rtbText.Location = new System.Drawing.Point(160, 165);
+            this.rtbText.Location = new System.Drawing.Point(101, 159);
             this.rtbText.Name = "rtbText";
-            this.rtbText.Size = new System.Drawing.Size(403, 154);
+            this.rtbText.Size = new System.Drawing.Size(506, 200);
             this.rtbText.TabIndex = 11;
             this.rtbText.Text = "\n";
             this.rtbText.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.rtbText_KeyPress);
             // 
             // btnNew
             // 
-            this.btnNew.Location = new System.Drawing.Point(223, 325);
+            this.btnNew.Location = new System.Drawing.Point(160, 397);
             this.btnNew.Name = "btnNew";
             this.btnNew.Size = new System.Drawing.Size(75, 23);
             this.btnNew.TabIndex = 12;
@@ -177,7 +176,7 @@
             // lbTimer
             // 
             this.lbTimer.Font = new System.Drawing.Font("Microsoft Sans Serif", 27.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.lbTimer.Location = new System.Drawing.Point(604, 184);
+            this.lbTimer.Location = new System.Drawing.Point(629, 244);
             this.lbTimer.Name = "lbTimer";
             this.lbTimer.Size = new System.Drawing.Size(149, 44);
             this.lbTimer.TabIndex = 13;
@@ -186,7 +185,7 @@
             // lbWpm
             // 
             this.lbWpm.Font = new System.Drawing.Font("Microsoft Sans Serif", 27.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.lbWpm.Location = new System.Drawing.Point(569, 275);
+            this.lbWpm.Location = new System.Drawing.Point(549, 388);
             this.lbWpm.Name = "lbWpm";
             this.lbWpm.Size = new System.Drawing.Size(229, 44);
             this.lbWpm.TabIndex = 14;
@@ -196,18 +195,43 @@
             // label1
             // 
             this.label1.Font = new System.Drawing.Font("Microsoft Sans Serif", 27.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label1.Location = new System.Drawing.Point(256, 9);
+            this.label1.Location = new System.Drawing.Point(236, 9);
             this.label1.Name = "label1";
             this.label1.Size = new System.Drawing.Size(307, 44);
             this.label1.TabIndex = 15;
-            this.label1.Text = "Typining Trainer";
-            this.label1.Click += new System.EventHandler(this.label1_Click);
+            this.label1.Text = "Typing Trainer";
+            // 
+            // cbTimeCounter
+            // 
+            this.cbTimeCounter.FormattingEnabled = true;
+            this.cbTimeCounter.Items.AddRange(new object[] {
+            "10",
+            "30",
+            "60",
+            "120"});
+            this.cbTimeCounter.Location = new System.Drawing.Point(569, 64);
+            this.cbTimeCounter.Name = "cbTimeCounter";
+            this.cbTimeCounter.Size = new System.Drawing.Size(121, 21);
+            this.cbTimeCounter.TabIndex = 16;
+            this.cbTimeCounter.Text = "Time";
+            // 
+            // lbTimeCounter
+            // 
+            this.lbTimeCounter.AutoSize = true;
+            this.lbTimeCounter.Location = new System.Drawing.Point(566, 48);
+            this.lbTimeCounter.Name = "lbTimeCounter";
+            this.lbTimeCounter.Size = new System.Drawing.Size(106, 13);
+            this.lbTimeCounter.TabIndex = 17;
+            this.lbTimeCounter.Text = "Select Timer Counter";
+            this.lbTimeCounter.Click += new System.EventHandler(this.lbTimeCounter_Click);
             // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(800, 450);
+            this.Controls.Add(this.lbTimeCounter);
+            this.Controls.Add(this.cbTimeCounter);
             this.Controls.Add(this.label1);
             this.Controls.Add(this.lbWpm);
             this.Controls.Add(this.lbTimer);
@@ -248,6 +272,8 @@
         private System.Windows.Forms.Label lbTimer;
         private System.Windows.Forms.Label lbWpm;
         private System.Windows.Forms.Label label1;
+        private System.Windows.Forms.ComboBox cbTimeCounter;
+        private System.Windows.Forms.Label lbTimeCounter;
     }
 }
 

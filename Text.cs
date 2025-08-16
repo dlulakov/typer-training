@@ -24,6 +24,10 @@ namespace Typer_Training{
         }
         public int CalculateWPM()
         {
+            if (timeNeeded == 0)
+            {
+                return 0;
+            }
             return (int)((CharactersTyped * 60) / (5 * timeNeeded));
         }
 

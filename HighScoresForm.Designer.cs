@@ -1,6 +1,6 @@
 ﻿namespace Typer_Training
 {
-    partial class Form2
+    partial class HighScoresForm
     {
         /// <summary>
         /// Required designer variable.
@@ -36,7 +36,10 @@
             this.wordsToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.timeToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.quoteToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.dataGridView1 = new System.Windows.Forms.DataGridView();
+            this.btnOk = new System.Windows.Forms.Button();
             this.menuStrip1.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.dataGridView1)).BeginInit();
             this.SuspendLayout();
             // 
             // label1
@@ -51,7 +54,7 @@
             // lbTimer
             // 
             this.lbTimer.Font = new System.Drawing.Font("Microsoft Sans Serif", 27.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.lbTimer.Location = new System.Drawing.Point(69, 23);
+            this.lbTimer.Location = new System.Drawing.Point(79, 36);
             this.lbTimer.Name = "lbTimer";
             this.lbTimer.Size = new System.Drawing.Size(239, 44);
             this.lbTimer.TabIndex = 14;
@@ -82,40 +85,63 @@
             // zenToolStripMenuItem
             // 
             this.zenToolStripMenuItem.Name = "zenToolStripMenuItem";
-            this.zenToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
+            this.zenToolStripMenuItem.Size = new System.Drawing.Size(108, 22);
             this.zenToolStripMenuItem.Text = "Zen";
             // 
             // wordsToolStripMenuItem
             // 
             this.wordsToolStripMenuItem.Name = "wordsToolStripMenuItem";
-            this.wordsToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
+            this.wordsToolStripMenuItem.Size = new System.Drawing.Size(108, 22);
             this.wordsToolStripMenuItem.Text = "Words";
             // 
             // timeToolStripMenuItem
             // 
             this.timeToolStripMenuItem.Name = "timeToolStripMenuItem";
-            this.timeToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
+            this.timeToolStripMenuItem.Size = new System.Drawing.Size(108, 22);
             this.timeToolStripMenuItem.Text = "Time";
             // 
             // quoteToolStripMenuItem
             // 
             this.quoteToolStripMenuItem.Name = "quoteToolStripMenuItem";
-            this.quoteToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
+            this.quoteToolStripMenuItem.Size = new System.Drawing.Size(108, 22);
             this.quoteToolStripMenuItem.Text = "Quote";
             // 
-            // Form2
+            // dataGridView1
+            // 
+            this.dataGridView1.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
+            this.dataGridView1.Location = new System.Drawing.Point(23, 94);
+            this.dataGridView1.Name = "dataGridView1";
+            this.dataGridView1.Size = new System.Drawing.Size(359, 348);
+            this.dataGridView1.TabIndex = 16;
+            this.dataGridView1.CellContentClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.dataGridView1_CellContentClick);
+            // 
+            // btnOk
+            // 
+            this.btnOk.Location = new System.Drawing.Point(23, 468);
+            this.btnOk.Name = "btnOk";
+            this.btnOk.Size = new System.Drawing.Size(359, 23);
+            this.btnOk.TabIndex = 17;
+            this.btnOk.Text = "Ok";
+            this.btnOk.UseVisualStyleBackColor = true;
+            this.btnOk.Click += new System.EventHandler(this.label1_Click);
+            // 
+            // HighScoresForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(394, 523);
+            this.Controls.Add(this.btnOk);
+            this.Controls.Add(this.dataGridView1);
             this.Controls.Add(this.lbTimer);
             this.Controls.Add(this.label1);
             this.Controls.Add(this.menuStrip1);
             this.MainMenuStrip = this.menuStrip1;
-            this.Name = "Form2";
+            this.Name = "HighScoresForm";
             this.Text = "Form2";
+            this.Load += new System.EventHandler(this.Form2_Load);
             this.menuStrip1.ResumeLayout(false);
             this.menuStrip1.PerformLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.dataGridView1)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -131,5 +157,7 @@
         private System.Windows.Forms.ToolStripMenuItem wordsToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem timeToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem quoteToolStripMenuItem;
+        private System.Windows.Forms.DataGridView dataGridView1;
+        private System.Windows.Forms.Button btnOk;
     }
 }
