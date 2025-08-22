@@ -39,31 +39,14 @@ namespace Typer_Training
 
         private void Form2_Load(object sender, EventArgs e)
         {
-            if (highScores != null && highScores.scores.Count > 0)
-            {
-                // use your entity's getSorted method
-                var sorted = highScores.getSorted()
-                    .Select((s, index) => new
-                    {
-                        Rank = index + 1,
-                        Name = s.Name, 
-                        WPM = s.WPM
-                    })
-                    .ToList();
-
-                dataGridView1.DataSource = sorted;
-            }
-            else
-            {
-                dataGridView1.DataSource = null;
-            }
-
-            // optional formatting
+            ShowAllScores(); // default to all scores
             dataGridView1.AutoSizeColumnsMode = DataGridViewAutoSizeColumnsMode.Fill;
             dataGridView1.ReadOnly = true;
             dataGridView1.AllowUserToAddRows = false;
             dataGridView1.AllowUserToDeleteRows = false;
         }
+
+
 
         private void serializeScore(string fileName)
         {
@@ -107,5 +90,98 @@ namespace Typer_Training
         {
 
         }
+
+        private void FilterScores(Type scoreType)
+        {
+            if (highScores != null && highScores.scores.Count > 0)
+            {
+                var filtered = highScores.scores
+                    .Where(s => s.ScoreType == scoreType)
+                    .OrderByDescending(s => s.WPM)
+                    .Select((s, index) => new
+                    {
+                        Rank = index + 1,
+                        Name = s.Name,
+                        WPM = s.WPM
+                    })
+                    .ToList();
+
+                dataGridView1.DataSource = filtered;
+            }
+            else
+            {
+                dataGridView1.DataSource = null;
+            }
+        }
+
+        private void zenToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            FilterScores(Type.Zen);
+            SetCheckedMenuItem(zenToolStripMenuItem);
+        }
+
+        private void wordsToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            FilterScores(Type.Words);
+            SetCheckedMenuItem(wordsToolStripMenuItem);
+        }
+
+        private void timeToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            FilterScores(Type.Time);
+            SetCheckedMenuItem(timeToolStripMenuItem);
+        }
+
+        private void quoteToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            FilterScores(Type.Quote);
+            SetCheckedMenuItem(quoteToolStripMenuItem);
+        }
+
+        private void alllToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            ShowAllScores();
+            SetCheckedMenuItem(alllToolStripMenuItem);
+        }
+
+        private void ShowAllScores()
+        {
+            if (highScores != null && highScores.scores.Count > 0)
+            {
+                var allScores = highScores.scores
+                    .OrderByDescending(s => s.WPM)
+                    .Select((s, index) => new
+                    {
+                        Rank = index + 1,
+                        Name = s.Name,
+                        WPM = s.WPM,
+                        Type = s.ScoreType.ToString() // include type in display
+                    })
+                    .ToList();
+
+                dataGridView1.DataSource = allScores;
+            }
+            else
+            {
+                dataGridView1.DataSource = null;
+            }
+        }
+        private void SetCheckedMenuItem(ToolStripMenuItem selectedItem)
+        {
+            // Loop through all top-level menu items
+            foreach (ToolStripMenuItem item in menuStrip1.Items)
+            {
+                // Loop through each dropdown item if the item has a dropdown
+                if (item.DropDownItems.Count > 0)
+                {
+                    foreach (ToolStripMenuItem subItem in item.DropDownItems)
+                    {
+                        subItem.Checked = (subItem == selectedItem);
+                    }
+                }
+            }
+        }
+
+
     }
 }

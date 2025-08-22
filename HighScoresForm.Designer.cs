@@ -38,6 +38,7 @@
             this.quoteToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.dataGridView1 = new System.Windows.Forms.DataGridView();
             this.btnOk = new System.Windows.Forms.Button();
+            this.alllToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.menuStrip1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.dataGridView1)).BeginInit();
             this.SuspendLayout();
@@ -77,7 +78,8 @@
             this.zenToolStripMenuItem,
             this.wordsToolStripMenuItem,
             this.timeToolStripMenuItem,
-            this.quoteToolStripMenuItem});
+            this.quoteToolStripMenuItem,
+            this.alllToolStripMenuItem});
             this.categoryToolStripMenuItem.Name = "categoryToolStripMenuItem";
             this.categoryToolStripMenuItem.Size = new System.Drawing.Size(67, 20);
             this.categoryToolStripMenuItem.Text = "Category";
@@ -85,26 +87,30 @@
             // zenToolStripMenuItem
             // 
             this.zenToolStripMenuItem.Name = "zenToolStripMenuItem";
-            this.zenToolStripMenuItem.Size = new System.Drawing.Size(108, 22);
+            this.zenToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
             this.zenToolStripMenuItem.Text = "Zen";
+            this.zenToolStripMenuItem.Click += new System.EventHandler(this.zenToolStripMenuItem_Click);
             // 
             // wordsToolStripMenuItem
             // 
             this.wordsToolStripMenuItem.Name = "wordsToolStripMenuItem";
-            this.wordsToolStripMenuItem.Size = new System.Drawing.Size(108, 22);
+            this.wordsToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
             this.wordsToolStripMenuItem.Text = "Words";
+            this.wordsToolStripMenuItem.Click += new System.EventHandler(this.wordsToolStripMenuItem_Click);
             // 
             // timeToolStripMenuItem
             // 
             this.timeToolStripMenuItem.Name = "timeToolStripMenuItem";
-            this.timeToolStripMenuItem.Size = new System.Drawing.Size(108, 22);
+            this.timeToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
             this.timeToolStripMenuItem.Text = "Time";
+            this.timeToolStripMenuItem.Click += new System.EventHandler(this.timeToolStripMenuItem_Click);
             // 
             // quoteToolStripMenuItem
             // 
             this.quoteToolStripMenuItem.Name = "quoteToolStripMenuItem";
-            this.quoteToolStripMenuItem.Size = new System.Drawing.Size(108, 22);
+            this.quoteToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
             this.quoteToolStripMenuItem.Text = "Quote";
+            this.quoteToolStripMenuItem.Click += new System.EventHandler(this.quoteToolStripMenuItem_Click);
             // 
             // dataGridView1
             // 
@@ -124,6 +130,13 @@
             this.btnOk.Text = "Ok";
             this.btnOk.UseVisualStyleBackColor = true;
             this.btnOk.Click += new System.EventHandler(this.label1_Click);
+            // 
+            // alllToolStripMenuItem
+            // 
+            this.alllToolStripMenuItem.Name = "alllToolStripMenuItem";
+            this.alllToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
+            this.alllToolStripMenuItem.Text = "All";
+            this.alllToolStripMenuItem.Click += new System.EventHandler(this.alllToolStripMenuItem_Click);
             // 
             // HighScoresForm
             // 
@@ -159,5 +172,6 @@
         private System.Windows.Forms.ToolStripMenuItem quoteToolStripMenuItem;
         private System.Windows.Forms.DataGridView dataGridView1;
         private System.Windows.Forms.Button btnOk;
+        private System.Windows.Forms.ToolStripMenuItem alllToolStripMenuItem;
     }
 }

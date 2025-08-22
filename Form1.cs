@@ -39,6 +39,9 @@ namespace Typer_Training
 
             cBpunctuation.Visible = false;
             cbNumbers.Visible = false;
+            cbWordsNumber.SelectedIndexChanged += cbWordsNumber_SelectedIndexChangedAsync;
+            cBpunctuation.CheckedChanged += cBpunctuation_CheckedChanged;
+            cbNumbers.CheckedChanged += cbNumbers_CheckedChanged;
         }
 
         private void button1_Click(object sender, EventArgs e)
@@ -61,13 +64,26 @@ namespace Typer_Training
             form2.ShowDialog();
         }
 
-        private void rtbText_KeyPress(object sender, KeyPressEventArgs e)
+        private async void rtbText_KeyPress(object sender, KeyPressEventArgs e)
         {
             if (!timerStarted)
             {
                 timerStarted = true;
+
+                if (cbTime.Checked)
+                {
+                    timer = Convert.ToInt32(cbTimeCounter.Items[cbTimeCounter.SelectedIndex]);
+                    lbTimer.Text = String.Format("{0}:{1:D2}", timer / 60, timer % 60);
+                }
+                else
+                {
+                    timer = 0;
+                    lbTimer.Text = "0:00";
+                }
+
                 timer1.Start();
             }
+
 
             char typedChar = e.KeyChar;
 
@@ -122,6 +138,13 @@ namespace Typer_Training
                 }
 
             }
+            // In Time mode, if the text is finished but timer is still running → load new text
+            if (cbTime.Checked && currentIndex >= TextToGuess.Length && timer > 0)
+            {
+                await LoadNewText();
+                currentIndex = 0;
+            }
+
 
             UpdateCaretAndScroll();
         }
@@ -135,6 +158,18 @@ namespace Typer_Training
 
         private async void Form1_Load(object sender, EventArgs e)
         {
+            // Always select first item in cbWordsNumber
+            if (cbWordsNumber.Items.Count > 0)
+            {
+                cbWordsNumber.SelectedIndex = 0;
+            }
+
+            if (cbTimeCounter.Items.Count > 0)
+            {
+                cbTimeCounter.SelectedIndex = 0; // default to 15
+            }
+
+
             await LoadNewText();
 
             rtbText.ReadOnly = true;
@@ -147,10 +182,11 @@ namespace Typer_Training
             cBpunctuation.Visible = false;
 
             // Preselect Words and update visibility correctly
-            isUpdatingMode = false; // Make sure the guard is off
-            cbWords.Checked = true; // preselect
-            SelectMode(cbWords);    // call SelectMode to update visibility
+            isUpdatingMode = false;
+            cbWords.Checked = true;
+            SelectMode(cbWords);
         }
+
 
 
         private async void btnNew_Click(object sender, EventArgs e)
@@ -213,7 +249,6 @@ namespace Typer_Training
         private void SelectMode(CheckBox selected)
         {
             if (isUpdatingMode) return;
-
             isUpdatingMode = true;
 
             // Uncheck all other mode checkboxes
@@ -223,19 +258,26 @@ namespace Typer_Training
                     cb.Checked = false;
             }
 
-            // Show Numbers and Punctuation only for Time or Words modes
+            // Show Numbers + Punctuation only for Time or Words
             bool timeOrWordsSelected = cbTime.Checked || cbWords.Checked;
             cbNumbers.Visible = timeOrWordsSelected;
             cBpunctuation.Visible = timeOrWordsSelected;
 
-            // Show Time counter controls only if Time mode is selected
-            bool isTimeSelected = cbTime.Checked;
-            lbTimeCounter.Visible = isTimeSelected;
-            cbTimeCounter.Visible = isTimeSelected;
+            // Show cbWordsNumber + lbWordNumber only for Words mode
+            bool wordsSelected = cbWords.Checked;
+            cbWordsNumber.Visible = wordsSelected;
+            lbWordsNumber.Visible = wordsSelected;
+
+            // Show Time counter only for Time mode
+            lbTimeCounter.Visible = cbTime.Checked;
+            cbTimeCounter.Visible = cbTime.Checked;
 
             isUpdatingMode = false;
+
+            // reload text
             LoadNewText();
         }
+
 
         private void cbTime_CheckedChanged(object sender, EventArgs e)
         {
@@ -299,9 +341,35 @@ namespace Typer_Training
 
         private void timer1_Tick(object sender, EventArgs e)
         {
-            timer += 1;
-            lbTimer.Text = String.Format("{0}:{1}", timer / 60, timer % 60);
+            if (cbTime.Checked)
+            {
+                timer -= 1;
+                lbTimer.Text = String.Format("{0}:{1:D2}", timer / 60, timer % 60);
+
+                if (timer <= 0)
+                {
+                    timer1.Stop();
+                    timerStarted = false;
+
+                    // Calculate WPM based on selected duration
+                    int selectedTime = Convert.ToInt32(cbTimeCounter.Items[cbTimeCounter.SelectedIndex]);
+                    text.timeNeeded = selectedTime; // fixed duration
+                    WPM = text.CalculateWPM();
+                    lbWpm.Text = $"WPM: {WPM}";
+                    lbWpm.Visible = true;
+
+                    AddScore addScore = new AddScore(WPM, FileName, Type.Time);
+                    addScore.ShowDialog();
+                }
+            }
+            else
+            {
+                // default behavior (Words/Quote/Zen): count up
+                timer += 1;
+                lbTimer.Text = String.Format("{0}:{1:D2}", timer / 60, timer % 60);
+            }
         }
+
         private void SuspendDrawing(Control c)
         {
             SendMessage(c.Handle, WM_SETREDRAW, IntPtr.Zero, IntPtr.Zero);
@@ -320,7 +388,11 @@ namespace Typer_Training
 
             if (cbWords.Checked) // Words mode
             {
-                TextToGuess = await FetchParagraph();
+                TextToGuess = await ExtractWords();
+            }
+            else if (cbTime.Checked) // Time mode
+            {
+                TextToGuess = await ExtractWords(); // generate word list for time-based typing
             }
             else if (cbQuote.Checked) // Quote mode
             {
@@ -330,17 +402,31 @@ namespace Typer_Training
             {
                 TextToGuess = await FetchZenQuoteAsync();
             }
-            else // default fallback
+            else
             {
                 TextToGuess = await FetchParagraph();
             }
+
+            if (cbWords.Checked || cbTime.Checked)
+            {
+                if (!cBpunctuation.Checked)
+                    TextToGuess = new string(TextToGuess.Where(c => !char.IsPunctuation(c)).ToArray());
+                // Do NOT remove numbers, because we added them intentionally
+            }
+
+
+            // Apply filtering ONLY for Words or Time mode
+            if (cbWords.Checked || cbTime.Checked)
+                TextToGuess = FilterText(TextToGuess);
 
             text = new Text(TextToGuess);
             rtbText.ReadOnly = true;
             rtbText.Text = TextToGuess;
             ApplyStyling();
-            FormatText(); // Apply nicer formatting
+            FormatText();
         }
+
+
 
         // Existing method for paragraphs
         private async Task<string> FetchParagraph()
@@ -378,6 +464,50 @@ namespace Typer_Training
             }
         }
 
+
+        private async Task<string> ExtractWords()
+        {
+            int numWords = Convert.ToInt32(cbWordsNumber.Items[cbWordsNumber.SelectedIndex]);
+            List<string> collectedWords = new List<string>();
+            Random rnd = new Random();
+
+            // Keep fetching paragraphs until we have enough words
+            while (collectedWords.Count < numWords)
+            {
+                var result = await FetchParagraph();
+
+                // Apply punctuation filter
+                if (!cBpunctuation.Checked)
+                    result = new string(result.Where(c => !char.IsPunctuation(c)).ToArray());
+
+                var words = result.Split(
+                    new[] { ' ', '\t', '\r', '\n' },
+                    StringSplitOptions.RemoveEmptyEntries
+                ).ToList();
+
+                // If numbers checkbox is checked, randomly insert integers
+                if (cbNumbers.Checked)
+                {
+                    for (int i = 0; i < words.Count; i++)
+                    {
+                        // 30% chance to append a random number after a word
+                        if (rnd.NextDouble() < 0.3)
+                        {
+                            int randomNumber = rnd.Next(0, 1000); // random integer 0–999
+                            words[i] = words[i] + " " + randomNumber.ToString();
+                        }
+                    }
+                }
+
+                collectedWords.AddRange(words);
+            }
+
+            // Take exactly the requested number of words
+            var selectedWords = collectedWords.Take(numWords);
+
+            return string.Join(" ", selectedWords);
+        }
+
         private void checkBox1_CheckedChanged(object sender, EventArgs e)
         {
 
@@ -387,5 +517,52 @@ namespace Typer_Training
         {
 
         }
+
+        private string FilterText(string input)
+        {
+            string output = input;
+
+            // Remove punctuation if unchecked
+            if (!cBpunctuation.Checked)
+            {
+                output = new string(output.Where(c => !char.IsPunctuation(c)).ToArray());
+            }
+
+            // Remove numbers if unchecked
+            if (!cbNumbers.Checked)
+            {
+                output = new string(output.Where(c => !char.IsDigit(c)).ToArray());
+            }
+
+            return output;
+        }
+
+
+        private async void cbWordsNumber_SelectedIndexChangedAsync(object sender, EventArgs e)
+        {
+            if (cbWords.Checked) // only reload if Words mode is active
+            {
+                await LoadNewText();
+            }
+        }
+
+        private async void cBpunctuation_CheckedChanged(object sender, EventArgs e)
+        {
+            if (cbWords.Checked || cbTime.Checked)
+            {
+                await LoadNewText();
+                currentIndex = 0;
+            }
+        }
+
+        private async void cbNumbers_CheckedChanged(object sender, EventArgs e)
+        {
+            if (cbWords.Checked || cbTime.Checked)
+            {
+                await LoadNewText();
+                currentIndex = 0;
+            }
+        }
+
     }
 }

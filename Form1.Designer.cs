@@ -47,6 +47,8 @@
             this.label1 = new System.Windows.Forms.Label();
             this.cbTimeCounter = new System.Windows.Forms.ComboBox();
             this.lbTimeCounter = new System.Windows.Forms.Label();
+            this.cbWordsNumber = new System.Windows.Forms.ComboBox();
+            this.lbWordsNumber = new System.Windows.Forms.Label();
             this.SuspendLayout();
             // 
             // contextMenuStrip1
@@ -96,6 +98,7 @@
             this.cbNumbers.TabIndex = 5;
             this.cbNumbers.Text = "Numbers";
             this.cbNumbers.UseVisualStyleBackColor = true;
+            this.cbNumbers.CheckedChanged += new System.EventHandler(this.cbNumbers_CheckedChanged);
             // 
             // cBpunctuation
             // 
@@ -106,6 +109,7 @@
             this.cBpunctuation.TabIndex = 6;
             this.cBpunctuation.Text = "Punctinations";
             this.cBpunctuation.UseVisualStyleBackColor = true;
+            this.cBpunctuation.CheckedChanged += new System.EventHandler(this.cBpunctuation_CheckedChanged);
             // 
             // cbWords
             // 
@@ -225,11 +229,37 @@
             this.lbTimeCounter.Text = "Select Timer Counter";
             this.lbTimeCounter.Click += new System.EventHandler(this.lbTimeCounter_Click);
             // 
+            // cbWordsNumber
+            // 
+            this.cbWordsNumber.FormattingEnabled = true;
+            this.cbWordsNumber.Items.AddRange(new object[] {
+            "15",
+            "25",
+            "50",
+            "100"});
+            this.cbWordsNumber.Location = new System.Drawing.Point(569, 104);
+            this.cbWordsNumber.Name = "cbWordsNumber";
+            this.cbWordsNumber.Size = new System.Drawing.Size(121, 21);
+            this.cbWordsNumber.TabIndex = 18;
+            this.cbWordsNumber.Text = "Words";
+            this.cbWordsNumber.SelectedIndexChanged += new System.EventHandler(this.cbWordsNumber_SelectedIndexChangedAsync);
+            // 
+            // lbWordsNumber
+            // 
+            this.lbWordsNumber.AutoSize = true;
+            this.lbWordsNumber.Location = new System.Drawing.Point(566, 88);
+            this.lbWordsNumber.Name = "lbWordsNumber";
+            this.lbWordsNumber.Size = new System.Drawing.Size(117, 13);
+            this.lbWordsNumber.TabIndex = 19;
+            this.lbWordsNumber.Text = "Selecet Words Number";
+            // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(800, 450);
+            this.Controls.Add(this.lbWordsNumber);
+            this.Controls.Add(this.cbWordsNumber);
             this.Controls.Add(this.lbTimeCounter);
             this.Controls.Add(this.cbTimeCounter);
             this.Controls.Add(this.label1);
@@ -274,6 +304,8 @@
         private System.Windows.Forms.Label label1;
         private System.Windows.Forms.ComboBox cbTimeCounter;
         private System.Windows.Forms.Label lbTimeCounter;
+        private System.Windows.Forms.ComboBox cbWordsNumber;
+        private System.Windows.Forms.Label lbWordsNumber;
     }
 }
 
