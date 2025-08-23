@@ -8,7 +8,7 @@ The app allows users to take typing tests in English, measure typing speed (WPM)
 ## 📸 Screenshots
 <!-- Add your screenshots here -->
 - Main Menu  
-  ![Main Menu](MapinPage.PNG)
+  ![Main Menu](MainPage.PNG)
 
 - Typing Test  
   ![Typing Test](Typing.PNG)
@@ -16,7 +16,7 @@ The app allows users to take typing tests in English, measure typing speed (WPM)
 - Highscores  
   ![Highscores](HighScores.PNG)
   
-- Add Score 
+- Add Score    
   ![Add Score](Add_Score.PNG)
 
 ---
