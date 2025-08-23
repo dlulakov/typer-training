@@ -30,7 +30,6 @@
         {
             this.components = new System.ComponentModel.Container();
             this.contextMenuStrip1 = new System.Windows.Forms.ContextMenuStrip(this.components);
-            this.cbLanguages = new System.Windows.Forms.ComboBox();
             this.btnRestart = new System.Windows.Forms.Button();
             this.cbTime = new System.Windows.Forms.CheckBox();
             this.cbNumbers = new System.Windows.Forms.CheckBox();
@@ -55,18 +54,6 @@
             // 
             this.contextMenuStrip1.Name = "contextMenuStrip1";
             this.contextMenuStrip1.Size = new System.Drawing.Size(61, 4);
-            // 
-            // cbLanguages
-            // 
-            this.cbLanguages.FormattingEnabled = true;
-            this.cbLanguages.Items.AddRange(new object[] {
-            "English",
-            "Macedonian"});
-            this.cbLanguages.Location = new System.Drawing.Point(299, 112);
-            this.cbLanguages.Name = "cbLanguages";
-            this.cbLanguages.Size = new System.Drawing.Size(121, 21);
-            this.cbLanguages.TabIndex = 2;
-            this.cbLanguages.Text = "English";
             // 
             // btnRestart
             // 
@@ -227,7 +214,6 @@
             this.lbTimeCounter.Size = new System.Drawing.Size(106, 13);
             this.lbTimeCounter.TabIndex = 17;
             this.lbTimeCounter.Text = "Select Timer Counter";
-            this.lbTimeCounter.Click += new System.EventHandler(this.lbTimeCounter_Click);
             // 
             // cbWordsNumber
             // 
@@ -275,7 +261,6 @@
             this.Controls.Add(this.cbNumbers);
             this.Controls.Add(this.cbTime);
             this.Controls.Add(this.btnRestart);
-            this.Controls.Add(this.cbLanguages);
             this.Name = "Form1";
             this.Text = "Form1";
             this.Load += new System.EventHandler(this.Form1_Load);
@@ -287,7 +272,6 @@
         #endregion
 
         private System.Windows.Forms.ContextMenuStrip contextMenuStrip1;
-        private System.Windows.Forms.ComboBox cbLanguages;
         private System.Windows.Forms.Button btnRestart;
         private System.Windows.Forms.CheckBox cbTime;
         private System.Windows.Forms.CheckBox cbNumbers;

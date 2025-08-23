@@ -39,14 +39,12 @@ namespace Typer_Training
 
         private void Form2_Load(object sender, EventArgs e)
         {
-            ShowAllScores(); // default to all scores
+            ShowAllScores(); 
             dataGridView1.AutoSizeColumnsMode = DataGridViewAutoSizeColumnsMode.Fill;
             dataGridView1.ReadOnly = true;
             dataGridView1.AllowUserToAddRows = false;
             dataGridView1.AllowUserToDeleteRows = false;
         }
-
-
 
         private void serializeScore(string fileName)
         {
@@ -56,7 +54,6 @@ namespace Typer_Training
                 formatter.Serialize(fs, highScores);
             }
         }
-
 
         private void deserializeScores(string path)
         {
@@ -80,15 +77,9 @@ namespace Typer_Training
             }
             else
             {
-                // Create empty high scores and save to file
                 highScores = new HighScores();
                 serializeScore(path);
             }
-        }
-
-        private void dataGridView1_CellContentClick(object sender, DataGridViewCellEventArgs e)
-        {
-
         }
 
         private void FilterScores(Type scoreType)
@@ -155,7 +146,7 @@ namespace Typer_Training
                         Rank = index + 1,
                         Name = s.Name,
                         WPM = s.WPM,
-                        Type = s.ScoreType.ToString() // include type in display
+                        Type = s.ScoreType.ToString() 
                     })
                     .ToList();
 
@@ -168,10 +159,8 @@ namespace Typer_Training
         }
         private void SetCheckedMenuItem(ToolStripMenuItem selectedItem)
         {
-            // Loop through all top-level menu items
             foreach (ToolStripMenuItem item in menuStrip1.Items)
             {
-                // Loop through each dropdown item if the item has a dropdown
                 if (item.DropDownItems.Count > 0)
                 {
                     foreach (ToolStripMenuItem subItem in item.DropDownItems)
@@ -181,7 +170,6 @@ namespace Typer_Training
                 }
             }
         }
-
 
     }
 }
