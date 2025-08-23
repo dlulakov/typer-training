@@ -8,13 +8,16 @@ The app allows users to take typing tests in English, measure typing speed (WPM)
 ## 📸 Screenshots
 <!-- Add your screenshots here -->
 - Main Menu  
-  ![Main Menu](images/main_menu.png)
+  ![Main Menu](MapinPage.PNG)
 
 - Typing Test  
-  ![Typing Test](images/typing_test.png)
+  ![Typing Test](Typing.PNG)
 
 - Highscores  
-  ![Highscores](images/highscores.png)
+  ![Highscores](HighScores.PNG)
+  
+- Add Score 
+  ![Add Score](Add_Score.PNG)
 
 ---
 
@@ -30,8 +33,6 @@ The app allows users to take typing tests in English, measure typing speed (WPM)
 ## 🛠️ Technology Stack
 - **Language:** C#
 - **Framework:** .NET (Windows Forms)
-- **Storage:** Plain text file (`results.txt`)
+- **Storage:** Plain text file (`highscores.txt`)
 
 ---
-
-## 📂 Project Structure
