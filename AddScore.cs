@@ -46,8 +46,6 @@ namespace Typer_Training
                 formatter.Serialize(fs, highScores);
             }
         }
-
-
         private void deserializeScores(string path)
         {
             if (File.Exists(path))
@@ -70,13 +68,10 @@ namespace Typer_Training
             }
             else
             {
-                // Create empty high scores and save to file
                 highScores = new HighScores();
                 serializeScore(path);
             }
         }
-
-
         private void button1_Click(object sender, EventArgs e)
         {
             this.DialogResult = DialogResult.Cancel;
@@ -87,7 +82,6 @@ namespace Typer_Training
         {
 
         }
-
         private void lbWpm_Click(object sender, EventArgs e)
         {
 
